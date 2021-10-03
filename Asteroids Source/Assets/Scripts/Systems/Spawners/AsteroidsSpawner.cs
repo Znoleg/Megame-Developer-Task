@@ -55,7 +55,7 @@ public class AsteroidsSpawner : Singleton<AsteroidsSpawner>
 
     public event Action OnAsteroidsSpawn;
 
-    public void SpawnAsteroids(AsteroidSize asteroidSize, bool sameSpeed, params SpawnData[] asteroidData)
+    public void SpawnAsteroids(AsteroidSize asteroidSize, bool sameSpeed, bool trySwap, params SpawnData[] asteroidData)
     {
         Asteroid[] asteroidsToSpawn = new Asteroid[asteroidData.Length];
         for (int i = 0; i < asteroidData.Length; i++)
@@ -69,6 +69,8 @@ public class AsteroidsSpawner : Singleton<AsteroidsSpawner>
         {
             asteroid.SetSprite(GetRandomSprite(asteroidSize));
             asteroid.StartFlying(speed);
+            if (trySwap) ScreenSwaper.Instance.TrySwap(asteroid.transform, asteroid.FlyDirection);
+
             if (!sameSpeed) speed = GetRandomSpeed(asteroidSize);
         }
     }
@@ -107,7 +109,7 @@ public class AsteroidsSpawner : Singleton<AsteroidsSpawner>
         }
 
         _aliveAsteroids = _currentStartAsteroids;
-        SpawnAsteroids(AsteroidSize.Big, false, asteroidDatas);
+        SpawnAsteroids(AsteroidSize.Big, false, false, asteroidDatas);
         
         OnAsteroidsSpawn?.Invoke();
     }

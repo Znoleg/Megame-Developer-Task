@@ -43,7 +43,7 @@ public class AsteroidsDestroyer : Singleton<AsteroidsDestroyer>
         SpawnData[] asteroidDatas = new SpawnData[2];
         asteroidDatas[0] = ConstructData(asteroidPosition, asteroidRotation, Random.Range(_breakDegree.Min, 0f));
         asteroidDatas[1] = ConstructData(asteroidPosition, asteroidRotation, Random.Range(0f, _breakDegree.Max));
-        AsteroidsSpawner.Instance.SpawnAsteroids(asteroidSize - 1, true, asteroidDatas);
+        AsteroidsSpawner.Instance.SpawnAsteroids(asteroidSize - 1, true, true, asteroidDatas);
     }
 
     private SpawnData ConstructData(Vector2 asteroidPosition, Quaternion asteroidRotation, float degree)
